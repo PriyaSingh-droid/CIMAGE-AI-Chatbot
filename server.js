@@ -526,13 +526,16 @@ app.get("/", (req, res) => {
 });
 
 
-if (require.main === module) {
-    connectDatabase().finally(() => {
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
+connectDatabase().finally(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
     });
-}
+});
+
+module.exports = {
+    app,
+    connectDatabase
+};
 
 module.exports = {
     app,
