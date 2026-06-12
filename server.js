@@ -520,6 +520,9 @@ app.get("/api/queries", requireAdmin, async (req, res) => {
 });
 
 
+app.get("/health", (req, res) => {
+    res.send("OK");
+});
 // Home Route
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
