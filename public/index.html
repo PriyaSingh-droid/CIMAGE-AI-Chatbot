@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIMAGE AI Chatbot</title>
+    <link rel="stylesheet" href="styles.css?v=20260612-3">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <div class="brand-block">
+                <span class="brand-mark" aria-hidden="true">C</span>
+                <div>
+                    <p class="eyebrow">CIMAGE Help Desk</p>
+                    <h1><span class="brand-name"><span class="brand-initial">C</span><span class="brand-rest">IMAGE</span> AI Chatbot</span></h1>
+                </div>
+            </div>
+
+            <nav class="dashboard-switcher" aria-label="Dashboard">
+                <button type="button" class="switch-button active" data-dashboard-target="student">Student</button>
+                <button type="button" class="switch-button" data-dashboard-target="admin">Admin</button>
+            </nav>
+
+            <div class="header-actions">
+                <span class="status" id="serverStatus">Checking...</span>
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" aria-pressed="false">
+                    <span class="theme-icon" aria-hidden="true"></span>
+                    <span id="themeLabel">Light</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-view active" id="studentDashboard" data-dashboard-panel="student" aria-label="Student dashboard">
+            <section class="student-hero">
+                <div>
+                    <p class="eyebrow">Student Dashboard</p>
+                    <h2>Ask questions and find college information quickly.</h2>
+                    <p>Use the chatbot for admissions, fees, exams, certificates, campus facilities, and other student services.</p>
+                </div>
+                <div class="student-stat-grid">
+                    <div class="metric">
+                        <strong id="studentFaqCount">0</strong>
+                        <span>FAQs ready</span>
+                    </div>
+                    <div class="metric">
+                        <strong id="studentCategoryCount">0</strong>
+                        <span>Categories</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="student-layout">
+                <section class="chat-section" aria-label="CIMAGE AI chatbot">
+                    <div class="chat-window" id="chatWindow" aria-live="polite">
+                        <article class="message bot">
+                            <span>Ask me about admissions, fees, departments, timings, or campus services.</span>
+                        </article>
+                    </div>
+
+                    <div class="quick-prompts" aria-label="Suggested questions">
+                        <button type="button" data-prompt="How can I apply for admission?">Admissions</button>
+                        <button type="button" data-prompt="How can I pay college fees?">Fees</button>
+                        <button type="button" data-prompt="Where is the library?">Library</button>
+                        <button type="button" data-prompt="When are exams conducted?">Exams</button>
+                    </div>
+
+                    <form class="chat-form" id="chatForm">
+                        <label class="sr-only" for="questionInput">Ask a question</label>
+                        <input id="questionInput" type="text" placeholder="Type your question..." autocomplete="off" required>
+                        <button type="submit" class="send-button">Ask</button>
+                    </form>
+                </section>
+
+                <aside class="faq-browser" aria-label="Popular FAQs">
+                    <div class="panel-title-row">
+                        <div>
+                            <h2>Popular FAQs</h2>
+                            <p>Tap a question to ask it instantly.</p>
+                        </div>
+                        <button type="button" class="icon-button" id="refreshFaqs" aria-label="Refresh FAQs" title="Refresh FAQs">Refresh</button>
+                    </div>
+
+                    <label class="sr-only" for="faqSearch">Search FAQs</label>
+                    <input id="faqSearch" type="search" placeholder="Search FAQs...">
+                    <div class="faq-list" id="faqList" aria-live="polite"></div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="dashboard-view" id="adminDashboard" data-dashboard-panel="admin" aria-label="Admin dashboard">
+            <section class="admin-lock" id="adminLock" aria-label="Admin login">
+                <div>
+                    <p class="eyebrow">Protected Area</p>
+                    <h2>Admin passcode required</h2>
+                    <p>Enter the passcode to manage FAQs, edit answers, and review student queries.</p>
+                </div>
+                <form class="admin-login-form" id="adminLoginForm">
+                    <label class="sr-only" for="adminPasscode">Admin passcode</label>
+                    <input id="adminPasscode" type="password" placeholder="Enter admin passcode" autocomplete="current-password" required>
+                    <button type="submit">Unlock Admin</button>
+                    <p class="form-message" id="adminLoginMessage" role="status"></p>
+                </form>
+            </section>
+
+            <div class="admin-content locked" id="adminContent">
+            <section class="admin-overview">
+                <div>
+                    <p class="eyebrow">Admin Dashboard</p>
+                    <h2>Monitor student questions and improve answers.</h2>
+                    <p>Add FAQs, track unanswered questions, and keep the chatbot useful for students.</p>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <strong id="totalFaqs">0</strong>
+                        <span>Total FAQs</span>
+                    </div>
+                    <div class="metric">
+                        <strong id="totalQueries">0</strong>
+                        <span>Total queries</span>
+                    </div>
+                    <div class="metric">
+                        <strong id="unansweredQueries">0</strong>
+                        <span>Need answers</span>
+                    </div>
+                    <div class="metric">
+                        <strong id="categoryCount">0</strong>
+                        <span>Categories</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="admin-layout">
+                <section class="admin-panel" aria-label="Add FAQ">
+                    <div class="panel-title-row">
+                        <div>
+                            <h2 id="faqFormTitle">Add FAQ</h2>
+                            <p id="faqFormHelp">Create answers for common student questions or unresolved queries.</p>
+                        </div>
+                        <button type="button" class="icon-button hidden" id="cancelEditFaq">Cancel Edit</button>
+                    </div>
+
+                    <form id="faqForm" class="faq-form">
+                        <input id="faqId" type="hidden">
+                        <label for="faqQuestion">Question</label>
+                        <input id="faqQuestion" type="text" placeholder="Example: What are admission hours?" required>
+
+                        <label for="faqAnswer">Answer</label>
+                        <textarea id="faqAnswer" rows="5" placeholder="Example: Admissions are open from 9 AM to 5 PM." required></textarea>
+
+                        <label for="faqCategory">Category</label>
+                        <input id="faqCategory" type="text" placeholder="Admissions">
+
+                        <button type="submit" id="saveFaqButton">Save FAQ</button>
+                        <p class="form-message" id="faqMessage" role="status"></p>
+                    </form>
+                </section>
+
+                <section class="query-panel" aria-label="Manage FAQs">
+                    <div class="panel-title-row">
+                        <div>
+                            <h2>Edit Existing FAQs</h2>
+                            <p>Select a FAQ to edit its question, answer, or category.</p>
+                        </div>
+                        <button type="button" class="icon-button" id="refreshAdminFaqs" aria-label="Refresh admin FAQs" title="Refresh admin FAQs">Refresh</button>
+                    </div>
+
+                    <label class="sr-only" for="adminFaqSearch">Search admin FAQs</label>
+                    <input id="adminFaqSearch" type="search" placeholder="Search existing FAQs...">
+                    <div class="admin-faq-list" id="adminFaqList" aria-live="polite"></div>
+                </section>
+
+                <section class="query-panel" aria-label="Recent student queries">
+                    <div class="panel-title-row">
+                        <div>
+                            <h2>Recent Queries</h2>
+                            <p>Click a query to prepare a new FAQ.</p>
+                        </div>
+                        <button type="button" class="icon-button" id="refreshQueries" aria-label="Refresh queries" title="Refresh queries">Refresh</button>
+                    </div>
+
+                    <div class="query-filters" role="group" aria-label="Query filter">
+                        <button type="button" class="filter-button active" data-query-filter="all">All</button>
+                        <button type="button" class="filter-button" data-query-filter="unanswered">Unanswered</button>
+                    </div>
+
+                    <div class="query-list" id="queryList" aria-live="polite"></div>
+                </section>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js?v=20260612-6"></script>
+</body>
+</html>

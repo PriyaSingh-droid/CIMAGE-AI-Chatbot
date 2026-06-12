@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What are the admission office hours?",
+    "answer": "The admission office is open from 11 AM to 6 PM, Monday to Saturday.",
+    "category": "Admissions"
+  },
+  {
+    "question": "How can I apply for admission?",
+    "answer": "You can apply through the college admission office or the official online admission portal. Keep your marksheets, ID proof, photos, and transfer certificate ready.",
+    "category": "Admissions"
+  },
+  {
+    "question": "What documents are required for admission?",
+    "answer": "Commonly required documents include previous marksheets, transfer certificate, ID proof, passport-size photos, caste certificate if applicable, and admission form.",
+    "category": "Admissions"
+  },
+  {
+    "question": "What are the college timings?",
+    "answer": "Regular college timings are usually from 9 AM to 4 PM. Timings may vary by department, practical batch, or exam schedule.",
+    "category": "General"
+  },
+  {
+    "question": "Where is the library?",
+    "answer": "The library is located in the main academic block. You can ask at the reception for the exact room or floor.",
+    "category": "Facilities"
+  },
+  {
+    "question": "What are the library hours?",
+    "answer": "The library is open from 8 AM to 6 PM on working days.",
+    "category": "Facilities"
+  },
+  {
+    "question": "How can I pay college fees?",
+    "answer": "College fees can usually be paid online through the fee portal or offline at the accounts office. Please keep your student ID or admission number ready.",
+    "category": "Fees"
+  },
+  {
+    "question": "Where can I get my fee receipt?",
+    "answer": "You can collect your fee receipt from the accounts office or download it from the student fee portal if online payment is enabled.",
+    "category": "Fees"
+  },
+  {
+    "question": "How do I contact the college office?",
+    "answer": "You can contact the college office through the official phone number, email address, or by visiting the reception during working hours.",
+    "category": "Contact"
+  },
+  {
+    "question": "When are exams conducted?",
+    "answer": "Internal and semester exam dates are announced by the college or university. Check the notice board, official website, or department updates regularly.",
+    "category": "Exams"
+  },
+  {
+    "question": "Where can I find the exam timetable?",
+    "answer": "Exam timetables are usually shared on the notice board, college website, or department groups once released.",
+    "category": "Exams"
+  },
+  {
+    "question": "How can I get a bonafide certificate?",
+    "answer": "You can apply for a bonafide certificate at the college office by submitting an application with your student details and ID proof.",
+    "category": "Certificates"
+  },
+  {
+    "question": "How can I get my ID card?",
+    "answer": "Student ID cards are usually issued by the college office after admission verification. Contact the office if your ID card is delayed or lost.",
+    "category": "Student Services"
+  },
+  {
+    "question": "Is hostel facility available?",
+    "answer": "Hostel availability depends on the college. Please contact the hostel office or student section for current availability, fees, and rules.",
+    "category": "Facilities"
+  },
+  {
+    "question": "Is there a canteen in the college?",
+    "answer": "Yes, the college canteen is available during regular working hours for students and staff.",
+    "category": "Facilities"
+  }
+]
