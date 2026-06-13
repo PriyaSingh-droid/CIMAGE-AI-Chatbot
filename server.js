@@ -10,6 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.1-8b-instant";
 const FAQ_DATA_PATH = path.join(__dirname, "data", "faqs.json");
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const normalizeText = (value) => value.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
@@ -284,6 +286,52 @@ async function getPublicStats() {
     };
 }
 
+async function getAiAnswer(question) {
+    if (!GROQ_API_KEY) {
+        return null;
+    }
+
+    const faqContext = (await getFaqList({ limit: 25 }))
+        .map((faq, index) => `${index + 1}. Q: ${faq.question}\nA: ${faq.answer}`)
+        .join("\n\n");
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${GROQ_API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: GROQ_MODEL,
+            messages: [
+                {
+                    role: "system",
+                    content: [
+                        "You are the CIMAGE AI Chatbot for students.",
+                        "Answer clearly and helpfully using the FAQ context when it is relevant.",
+                        "If the question is outside the available context, say what you can infer and suggest contacting the college office for confirmation.",
+                        "Keep answers concise."
+                    ].join(" ")
+                },
+                {
+                    role: "user",
+                    content: `FAQ context:\n${faqContext || "No FAQ context is available."}\n\nStudent question: ${question}`
+                }
+            ],
+            temperature: 0.3,
+            max_tokens: 350
+        })
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`AI request failed: ${response.status} ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content?.trim() || null;
+}
+
 
 // MongoDB Connection
 async function connectDatabase() {
@@ -477,7 +525,8 @@ app.post("/api/chat", async (req, res) => {
             });
         }
 
-        const unknownAnswer = "Sorry, I don't know the answer.";
+        const aiAnswer = await getAiAnswer(question);
+        const unknownAnswer = aiAnswer || "Sorry, I don't know the answer.";
         await saveQueryLog({
             question,
             faq: null,
